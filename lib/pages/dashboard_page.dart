@@ -28,7 +28,7 @@ class _DashboardPageState extends State<DashboardPage> {
   Widget build(BuildContext context) {
     setStatusBarColor(color: BarColor.white);
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: black,
       body: Stack(
         children: [
           Opacity(
@@ -54,25 +54,25 @@ class _DashboardPageState extends State<DashboardPage> {
                               if (!snapshot.hasData) {
                                 return Center(child: WLoader(size: 50));
                               }
-                        
+
                               final List<WeightDetails> weights = snapshot.data;
-                        
+
                               if (weights.isEmpty) {
                                 return Center(
                                   child: Text(
                                     "No weight data yet",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: white,
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                 );
                               }
-                        
+
                               WeightDetails firstWeight = weights.first;
-                        
+
                               return Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -85,13 +85,17 @@ class _DashboardPageState extends State<DashboardPage> {
                                   ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                       Text(
                                         "${firstWeight.weight}",
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 400 / firstWeight.weight.toString().length,
+                                          fontSize: 400 /
+                                              firstWeight.weight
+                                                  .toString()
+                                                  .length,
                                         ),
                                       ),
                                       Text(
@@ -130,7 +134,7 @@ class _DashboardPageState extends State<DashboardPage> {
                         icon: Icons.add_rounded,
                         subText: "Add new weight now",
                         mainText: "Add",
-                        color: Colors.blue.withOpacity(0.2),
+                        color: blue.withOpacity(0.2),
                         onTap: () {
                           pushTo(context, AddWeightPage());
                         },
@@ -147,13 +151,13 @@ class _DashboardPageState extends State<DashboardPage> {
                         icon: Icons.exit_to_app_rounded,
                         subText: "It's not bye bye, come back.",
                         mainText: "Sign Out",
-                        onTap: () async{
+                        onTap: () async {
                           showLoader(context);
                           await AuthenticationService.signOut();
                           pop(context);
                           pushToAndClearStack(context, SplashPage());
                         },
-                        color: Colors.red.withOpacity(0.2),
+                        color: red.withOpacity(0.2),
                       ),
                       SizedBox(width: 10),
                     ],

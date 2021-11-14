@@ -3,6 +3,7 @@ import 'package:weight_tracker/core/models/weight_details.dart';
 import 'package:weight_tracker/pages/view_weight_page.dart';
 import 'package:weight_tracker/utils/functions/date_utils.dart';
 import 'package:weight_tracker/utils/navigation/navigator.dart';
+import 'package:weight_tracker/utils/styles/colour_utils.dart';
 
 class HistoryItem extends StatelessWidget {
   final WeightDetails weightDetails;
@@ -67,7 +68,7 @@ class HistoryItem extends StatelessWidget {
             ),
             SizedBox(height: 3),
             Divider(
-              color: Colors.white.withOpacity(0.5),
+              color: white.withOpacity(0.5),
             ),
             SizedBox(height: 10),
           ],

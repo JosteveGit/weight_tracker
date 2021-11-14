@@ -6,6 +6,7 @@ import 'package:weight_tracker/utils/functions/bottom_sheet_utils.dart';
 import 'package:weight_tracker/utils/functions/date_utils.dart';
 import 'package:weight_tracker/utils/functions/dialog_utils.dart';
 import 'package:weight_tracker/utils/navigation/navigator.dart';
+import 'package:weight_tracker/utils/styles/colour_utils.dart';
 import 'package:weight_tracker/utils/widgets/bg.dart';
 import 'package:weight_tracker/utils/widgets/custom_button.dart';
 import 'package:weight_tracker/utils/widgets/w_back_button.dart';
@@ -36,7 +37,7 @@ class _ViewWeightPageState extends State<ViewWeightPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: black,
       body: Stack(
         children: [
           Opacity(
@@ -81,7 +82,7 @@ class _ViewWeightPageState extends State<ViewWeightPage> {
                   CustomButton(
                     text: canDelete() ? "Delete" : "Edit",
                     expanded: true,
-                    color: canDelete() ? Colors.red : Colors.blue,
+                    color: canDelete() ? red : blue,
                     onPressed: action,
                     validator: () {
                       if (weight.isEmpty) {

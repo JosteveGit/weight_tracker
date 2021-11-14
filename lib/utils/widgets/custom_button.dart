@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weight_tracker/utils/styles/colour_utils.dart';
 
 class CustomButton extends StatelessWidget {
   final bool expanded;
@@ -31,7 +32,7 @@ class CustomButton extends StatelessWidget {
         child: Text(
           "$text",
           style: TextStyle(
-            color: textColor ?? Colors.white,
+            color: textColor ?? white,
             fontWeight: FontWeight.bold,
             fontSize: 14,
             letterSpacing: 0.5,
@@ -43,8 +44,8 @@ class CustomButton extends StatelessWidget {
           ),
           elevation: MaterialStateProperty.all(0.0),
           backgroundColor: (validator == null ? true : validator())
-              ? MaterialStateProperty.all(color ?? Colors.blue)
-              : MaterialStateProperty.all((color ?? Colors.blue).withOpacity(0.5)),
+              ? MaterialStateProperty.all(color ?? blue)
+              : MaterialStateProperty.all((color ?? blue).withOpacity(0.5)),
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),

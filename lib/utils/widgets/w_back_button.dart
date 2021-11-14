@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weight_tracker/utils/navigation/navigator.dart';
+import 'package:weight_tracker/utils/styles/colour_utils.dart';
 
 
 class WBackButton extends StatelessWidget {
@@ -29,7 +30,7 @@ class WBackButton extends StatelessWidget {
         ),
         child: Icon(
           Icons.arrow_back_rounded,
-          color: color ?? Colors.white,
+          color: color ?? blue,
           size: 20,
         ),
       ),

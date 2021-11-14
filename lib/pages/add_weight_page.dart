@@ -5,6 +5,7 @@ import 'package:weight_tracker/services/weight/weight_service.dart';
 import 'package:weight_tracker/utils/functions/bottom_sheet_utils.dart';
 import 'package:weight_tracker/utils/functions/dialog_utils.dart';
 import 'package:weight_tracker/utils/navigation/navigator.dart';
+import 'package:weight_tracker/utils/styles/colour_utils.dart';
 import 'package:weight_tracker/utils/widgets/bg.dart';
 import 'package:weight_tracker/utils/widgets/custom_button.dart';
 import 'package:weight_tracker/utils/widgets/w_back_button.dart';
@@ -27,7 +28,7 @@ class _AddWeightPageState extends State<AddWeightPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: black,
       body: Stack(
         children: [
           Opacity(

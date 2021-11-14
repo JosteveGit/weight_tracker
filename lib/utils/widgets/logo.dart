@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weight_tracker/utils/styles/colour_utils.dart';
 
 class Logo extends StatelessWidget {
   final double size;
@@ -24,18 +25,18 @@ class Logo extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.all(13),
               decoration: BoxDecoration(
-                color: Colors.blue.withOpacity(0.8),
+                color: blue.withOpacity(0.8),
                 shape: BoxShape.circle,
               ),
               child: Container(
                 padding: EdgeInsets.all(30),
                 child: Icon(
-                 ratherIcon ?? Icons.fitness_center_rounded,
+                  ratherIcon ?? Icons.fitness_center_rounded,
                   size: 120,
                   color: Colors.white,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: blue,
                   shape: BoxShape.circle,
                 ),
               ),

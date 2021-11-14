@@ -6,6 +6,7 @@ import 'package:weight_tracker/utils/functions/anim_utils.dart';
 import 'package:weight_tracker/utils/functions/dev_utils.dart';
 import 'package:weight_tracker/utils/functions/dialog_utils.dart';
 import 'package:weight_tracker/utils/navigation/navigator.dart';
+import 'package:weight_tracker/utils/styles/colour_utils.dart';
 import 'package:weight_tracker/utils/widgets/bg.dart';
 import 'package:weight_tracker/utils/widgets/custom_button.dart';
 import 'package:weight_tracker/utils/widgets/logo.dart';
@@ -41,7 +42,7 @@ class _SplashPageState extends State<SplashPage>
   Widget build(BuildContext context) {
     setStatusBarColor(color: BarColor.white);
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: black,
       body: Container(
         child: Stack(
           children: [

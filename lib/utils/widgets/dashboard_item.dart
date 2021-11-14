@@ -29,7 +29,7 @@ class DashboardItem extends StatelessWidget {
           children: [
             Icon(
               icon,
-              color: Colors.white,
+              color: white,
               size: 26,
             ),
             SizedBox(height: 5),

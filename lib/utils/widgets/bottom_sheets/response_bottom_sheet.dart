@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weight_tracker/utils/navigation/navigator.dart';
+import 'package:weight_tracker/utils/styles/colour_utils.dart';
 import 'package:weight_tracker/utils/widgets/bg.dart';
 import 'package:weight_tracker/utils/widgets/logo.dart';
 
@@ -82,7 +83,7 @@ class ResponseBottomSheet extends StatelessWidget {
                       onPressed: () {
                         pop(context);
                       },
-                      color: Colors.blue,
+                      color: blue,
                     ),
                     SizedBox(
                       height: 20 + MediaQuery.of(context).padding.bottom,

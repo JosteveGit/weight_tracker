@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:weight_tracker/utils/styles/colour_utils.dart';
 
 class BG extends StatelessWidget {
   const BG({
@@ -16,7 +17,7 @@ class BG extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         fit: BoxFit.cover,
-        color: Colors.blue[200],
+        color: blue200,
       ),
     );
   }
