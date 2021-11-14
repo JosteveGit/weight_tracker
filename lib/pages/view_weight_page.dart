@@ -25,13 +25,13 @@ class _ViewWeightPageState extends State<ViewWeightPage> {
     node.requestFocus();
     _weightDetails = widget.weightDetails;
     weight = _weightDetails.weight.toString();
-    text = TextEditingController(text: weight);
+    _controller = TextEditingController(text: weight);
     super.initState();
   }
 
   WeightDetails _weightDetails;
 
-  TextEditingController text;
+  TextEditingController _controller;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class _ViewWeightPageState extends State<ViewWeightPage> {
                   Spacer(),
                   WeightTextField(
                     node: node,
-                    controller: text,
+                    controller: _controller,
                     onChanged: (v) {
                       setState(() {
                         weight = v;
@@ -109,6 +109,12 @@ class _ViewWeightPageState extends State<ViewWeightPage> {
         ],
       ),
     );
+  }
+
+  @override
+  dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   bool canDelete() {

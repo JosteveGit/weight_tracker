@@ -7,18 +7,8 @@ import 'package:weight_tracker/utils/widgets/history_item.dart';
 import 'package:weight_tracker/utils/widgets/w_back_button.dart';
 import 'package:weight_tracker/utils/widgets/w_loader.dart';
 
-class HistoryPage extends StatefulWidget {
+class HistoryPage extends StatelessWidget {
   const HistoryPage({Key key}) : super(key: key);
-
-  @override
-  _HistoryPageState createState() => _HistoryPageState();
-}
-
-class _HistoryPageState extends State<HistoryPage> {
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

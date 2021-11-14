@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:weight_tracker/services/authentication/authentication_service.dart';
 import 'package:weight_tracker/utils/functions/anim_utils.dart';
 import 'package:weight_tracker/utils/functions/dev_utils.dart';
@@ -108,6 +107,12 @@ class _SplashPageState extends State<SplashPage>
         ),
       ),
     );
+  }
+
+  @override
+  dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   AnimationController _controller;

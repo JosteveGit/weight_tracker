@@ -128,7 +128,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       SizedBox(width: 20),
                       DashboardItem(
                         icon: Icons.add_rounded,
-                        subText: "Add new weight on a date",
+                        subText: "Add new weight now",
                         mainText: "Add",
                         color: Colors.blue.withOpacity(0.2),
                         onTap: () {
@@ -137,7 +137,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       ),
                       DashboardItem(
                         icon: Icons.history_outlined,
-                        subText: "View weights entered over time",
+                        subText: "View weights added over time",
                         mainText: "History",
                         onTap: () {
                           pushTo(context, HistoryPage());

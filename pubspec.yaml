@@ -51,16 +51,9 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/
     - assets/svgs/
 
   fonts:
-    - family: Raleway
-      fonts:
-        - asset: assets/fonts/Raleway/Raleway-Regular.ttf
-        - asset: assets/fonts/Raleway/Raleway-Bold.ttf
-        - asset: assets/fonts/Raleway/Raleway-Italic.ttf
-          style: italic
           
     - family: Montserrat
       fonts:
