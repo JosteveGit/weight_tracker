@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:weight_tracker/core/models/weight_details.dart';
+import 'package:weight_tracker/services/weight/weight_service.dart';
 import 'package:weight_tracker/utils/styles/colour_utils.dart';
 import 'package:weight_tracker/utils/widgets/bg.dart';
 import 'package:weight_tracker/utils/widgets/history_item.dart';
 import 'package:weight_tracker/utils/widgets/w_back_button.dart';
+import 'package:weight_tracker/utils/widgets/w_loader.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({Key key}) : super(key: key);
@@ -46,18 +49,48 @@ class _HistoryPageState extends State<HistoryPage> {
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
-                          color: baseColor,
-                          borderRadius: BorderRadius.circular(16)),
-                      child: SingleChildScrollView(
-                        child: Container(
-                          padding: EdgeInsets.all(20),
-                          child: Column(
-                            children: [
-                              HistoryItem(),
-                              HistoryItem(),
-                            ],
-                          ),
-                        ),
+                        color: baseColor,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: StreamBuilder<Object>(
+                        stream: WeightService.streamWeights(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return WLoader(size: 50);
+                          }
+
+                          List<WeightDetails> weights = snapshot.data;
+
+                          if (weights.isEmpty) {
+                            return Center(
+                              child: Text(
+                                "No weight data yet",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            );
+                          }
+
+                          return SingleChildScrollView(
+                            child: Container(
+                              padding: EdgeInsets.all(20),
+                              child: Column(
+                                children: List.generate(
+                                  weights.length,
+                                  (index) {
+                                    return HistoryItem(
+                                      weightDetails: weights[index],
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   )
@@ -70,4 +103,3 @@ class _HistoryPageState extends State<HistoryPage> {
     );
   }
 }
-

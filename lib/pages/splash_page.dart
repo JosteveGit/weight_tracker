@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:weight_tracker/services/authentication/authentication_service.dart';
 import 'package:weight_tracker/utils/functions/anim_utils.dart';
 import 'package:weight_tracker/utils/functions/dev_utils.dart';
+import 'package:weight_tracker/utils/functions/dialog_utils.dart';
 import 'package:weight_tracker/utils/navigation/navigator.dart';
 import 'package:weight_tracker/utils/widgets/bg.dart';
 import 'package:weight_tracker/utils/widgets/custom_button.dart';
@@ -66,9 +68,7 @@ class _SplashPageState extends State<SplashPage>
                             ),
                             CustomButton(
                               text: "Sign in",
-                              onPressed: () {
-                                pushTo(context, DashboardPage());
-                              },
+                              onPressed: signIn,
                             ),
                           ],
                         ),
@@ -112,5 +112,11 @@ class _SplashPageState extends State<SplashPage>
 
   AnimationController _controller;
   CurvedAnimation _animation;
-}
 
+  void signIn() async {
+    showLoader(context);
+    await AuthenticationService.signIn();
+    pop(context);
+    pushToAndClearStack(context, DashboardPage());
+  }
+}

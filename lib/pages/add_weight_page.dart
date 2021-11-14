@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:weight_tracker/core/models/weight_details.dart';
+import 'package:weight_tracker/services/weight/weight_service.dart';
+import 'package:weight_tracker/utils/functions/dialog_utils.dart';
+import 'package:weight_tracker/utils/navigation/navigator.dart';
 import 'package:weight_tracker/utils/widgets/bg.dart';
 import 'package:weight_tracker/utils/widgets/custom_button.dart';
 import 'package:weight_tracker/utils/widgets/w_back_button.dart';
+import 'package:weight_tracker/utils/widgets/weight_text_field.dart';
 
 class AddWeightPage extends StatefulWidget {
   const AddWeightPage({Key key}) : super(key: key);
@@ -44,23 +49,13 @@ class _AddWeightPageState extends State<AddWeightPage> {
                     ),
                   ),
                   Spacer(),
-                  TextField(
-                    focusNode: node,
-                    cursorWidth: 0.0,
-                    cursorHeight: 0.0,
-                    inputFormatters: [LengthLimitingTextInputFormatter(5)],
-                    keyboardType: TextInputType.numberWithOptions(
-                      decimal: true,
-                      signed: false,
-                    ),
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration.collapsed(
-                      hintText: "30.2",
-                    ),
-                    style: TextStyle(
-                      fontSize: 100,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  WeightTextField(
+                    node: node,
+                    onChanged: (v) {
+                      setState(() {
+                        weight = v;
+                      });
+                    },
                   ),
                   Center(
                     child: Text(
@@ -75,7 +70,18 @@ class _AddWeightPageState extends State<AddWeightPage> {
                   CustomButton(
                     text: "Save",
                     expanded: true,
-                    onPressed: () {},
+                    onPressed: save,
+                    validator: () {
+                      if (weight.isEmpty) {
+                        return false;
+                      }
+                      try {
+                        double.parse(weight);
+                        return true;
+                      } catch (e) {
+                        return false;
+                      }
+                    },
                   ),
                 ],
               ),
@@ -86,5 +92,20 @@ class _AddWeightPageState extends State<AddWeightPage> {
     );
   }
 
+  String weight = "";
+
   FocusNode node = FocusNode();
+
+  void save() async {
+    showLoader(context);
+    await WeightService.addWeight(
+      weight: WeightDetails(
+        weight: double.parse(weight),
+        dateAdded: DateTime.now().toString(),
+      ),
+    );
+    pop(context);
+  }
 }
+
+

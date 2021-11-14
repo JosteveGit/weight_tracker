@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:weight_tracker/core/models/weight_details.dart';
+import 'package:weight_tracker/services/weight/weight_service.dart';
+import 'package:weight_tracker/utils/functions/date_utils.dart';
+import 'package:weight_tracker/utils/functions/dialog_utils.dart';
+import 'package:weight_tracker/utils/navigation/navigator.dart';
 import 'package:weight_tracker/utils/widgets/bg.dart';
 import 'package:weight_tracker/utils/widgets/custom_button.dart';
 import 'package:weight_tracker/utils/widgets/w_back_button.dart';
+import 'package:weight_tracker/utils/widgets/weight_text_field.dart';
 
 class ViewWeightPage extends StatefulWidget {
-  const ViewWeightPage({Key key}) : super(key: key);
+  final WeightDetails weightDetails;
+  const ViewWeightPage({Key key, this.weightDetails}) : super(key: key);
 
   @override
   _ViewWeightPageState createState() => _ViewWeightPageState();
@@ -15,8 +22,15 @@ class _ViewWeightPageState extends State<ViewWeightPage> {
   @override
   void initState() {
     node.requestFocus();
+    _weightDetails = widget.weightDetails;
+    weight = _weightDetails.weight.toString();
+    text = TextEditingController(text: weight);
     super.initState();
   }
+
+  WeightDetails _weightDetails;
+
+  TextEditingController text;
 
   @override
   Widget build(BuildContext context) {
@@ -44,24 +58,14 @@ class _ViewWeightPageState extends State<ViewWeightPage> {
                     ),
                   ),
                   Spacer(),
-                  TextField(
-                    focusNode: node,
-                    cursorWidth: 0.0,
-                    cursorHeight: 0.0,
-                    inputFormatters: [LengthLimitingTextInputFormatter(5)],
-                    keyboardType: TextInputType.numberWithOptions(
-                      decimal: true,
-                      signed: false,
-                    ),
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration.collapsed(
-                      hintText: "30.2",
-                    ),
-                    controller: TextEditingController(text: "40.3"),
-                    style: TextStyle(
-                      fontSize: 100,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  WeightTextField(
+                    node: node,
+                    controller: text,
+                    onChanged: (v) {
+                      setState(() {
+                        weight = v;
+                      });
+                    },
                   ),
                   Center(
                     child: Text(
@@ -74,15 +78,26 @@ class _ViewWeightPageState extends State<ViewWeightPage> {
                   ),
                   Spacer(),
                   CustomButton(
-                    text: "Delete",
+                    text: canDelete() ? "Delete" : "Edit",
                     expanded: true,
-                    color: Colors.red,
-                    onPressed: () {},
+                    color: canDelete() ? Colors.red : Colors.blue,
+                    onPressed: action,
+                    validator: () {
+                      if (weight.isEmpty) {
+                        return false;
+                      }
+                      try {
+                        double.parse(weight);
+                        return true;
+                      } catch (e) {
+                        return false;
+                      }
+                    },
                   ),
                   SizedBox(height: 8),
                   Center(
                     child: Text(
-                      "12 Nov 2021, 4:40",
+                      formatDate(_weightDetails.dateAdded),
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
                   )
@@ -93,6 +108,46 @@ class _ViewWeightPageState extends State<ViewWeightPage> {
         ],
       ),
     );
+  }
+
+  bool canDelete() {
+    if (weight.isEmpty) {
+      return false;
+    }
+    try {
+      return double.parse(weight) == _weightDetails.weight;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  String weight = "";
+
+  void action() async {
+    double newWeight = double.parse(weight);
+    showLoader(context);
+    String actionCompleted = "Deleted successfully";
+    if (newWeight == _weightDetails.weight) {
+      //Delete
+      await WeightService.deleteWeight(id: _weightDetails.id);
+    } else {
+      //Update
+      await WeightService.updateWeight(
+        weight: WeightDetails(
+          id: _weightDetails.id,
+          weight: newWeight,
+          dateAdded: _weightDetails.dateAdded,
+          modifications: _weightDetails.modifications..add({
+            "date": DateTime.now().toString(),
+            "oldWeight": _weightDetails.weight,
+            "newWeight": newWeight,
+          }),
+        ),
+      );
+      actionCompleted = "Updated successfully"; 
+    }
+    pop(context);
+    print(actionCompleted);
   }
 
   FocusNode node = FocusNode();
