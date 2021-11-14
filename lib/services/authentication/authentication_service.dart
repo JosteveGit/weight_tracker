@@ -5,6 +5,9 @@ class AuthenticationService {
   static Future<void> signIn() async {
     UserCredential cred = await FirebaseAuth.instance.signInAnonymously();
     uid = cred.user.uid;
-    preferences.setString("uid", uid);
+  }
+
+  static Future<void> signOut() async {
+    await FirebaseAuth.instance.signOut();
   }
 }

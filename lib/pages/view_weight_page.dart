@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:weight_tracker/core/models/weight_details.dart';
 import 'package:weight_tracker/services/weight/weight_service.dart';
+import 'package:weight_tracker/utils/functions/bottom_sheet_utils.dart';
 import 'package:weight_tracker/utils/functions/date_utils.dart';
 import 'package:weight_tracker/utils/functions/dialog_utils.dart';
 import 'package:weight_tracker/utils/navigation/navigator.dart';
@@ -126,7 +127,7 @@ class _ViewWeightPageState extends State<ViewWeightPage> {
   void action() async {
     double newWeight = double.parse(weight);
     showLoader(context);
-    String actionCompleted = "Deleted successfully";
+    String actionCompleted = "WEIGHT\nDELETED";
     if (newWeight == _weightDetails.weight) {
       //Delete
       await WeightService.deleteWeight(id: _weightDetails.id);
@@ -137,17 +138,22 @@ class _ViewWeightPageState extends State<ViewWeightPage> {
           id: _weightDetails.id,
           weight: newWeight,
           dateAdded: _weightDetails.dateAdded,
-          modifications: _weightDetails.modifications..add({
-            "date": DateTime.now().toString(),
-            "oldWeight": _weightDetails.weight,
-            "newWeight": newWeight,
-          }),
+          modifications: _weightDetails.modifications
+            ..add({
+              "date": DateTime.now().toString(),
+              "oldWeight": _weightDetails.weight,
+              "newWeight": newWeight,
+            }),
         ),
       );
-      actionCompleted = "Updated successfully"; 
+      actionCompleted = "WEIGHT\nUPDATED";
     }
     pop(context);
-    print(actionCompleted);
+    await showResponseBottomSheet(
+      context,
+      message: actionCompleted,
+    );
+    pop(context);
   }
 
   FocusNode node = FocusNode();

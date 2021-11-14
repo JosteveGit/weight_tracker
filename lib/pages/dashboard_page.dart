@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:weight_tracker/core/models/weight_details.dart';
 import 'package:weight_tracker/pages/history_page.dart';
 import 'package:weight_tracker/pages/splash_page.dart';
+import 'package:weight_tracker/services/authentication/authentication_service.dart';
 import 'package:weight_tracker/services/weight/weight_service.dart';
 import 'package:weight_tracker/utils/functions/date_utils.dart';
 import 'package:weight_tracker/utils/functions/dev_utils.dart';
+import 'package:weight_tracker/utils/functions/dialog_utils.dart';
 import 'package:weight_tracker/utils/navigation/navigator.dart';
 import 'package:weight_tracker/utils/styles/colour_utils.dart';
 import 'package:weight_tracker/utils/widgets/bg.dart';
@@ -46,74 +48,76 @@ class _DashboardPageState extends State<DashboardPage> {
                           size: 50,
                         ),
                         Spacer(),
-                        StreamBuilder<List<WeightDetails>>(
-                          stream: WeightService.streamWeights(),
-                          builder: (context, snapshot) {
-                            if (!snapshot.hasData) {
-                              return WLoader(size: 50);
-                            }
-
-                            final List<WeightDetails> weights = snapshot.data;
-
-                            if (weights.isEmpty) {
-                              return Center(
-                                child: Text(
-                                  "No weight data yet",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
+                        Expanded(
+                          child: StreamBuilder<List<WeightDetails>>(
+                            stream: WeightService.streamWeights(),
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData) {
+                                return Center(child: WLoader(size: 50));
+                              }
+                        
+                              final List<WeightDetails> weights = snapshot.data;
+                        
+                              if (weights.isEmpty) {
+                                return Center(
+                                  child: Text(
+                                    "No weight data yet",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
+                                );
+                              }
+                        
+                              WeightDetails firstWeight = weights.first;
+                        
+                              return Container(
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "Current Weight",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "${firstWeight.weight}",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 400 / firstWeight.weight.toString().length,
+                                          ),
+                                        ),
+                                        Text(
+                                          "kg",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 30,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Text(
+                                      formatDate(
+                                        firstWeight.dateAdded,
+                                        false,
+                                      ),
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               );
-                            }
-
-                            WeightDetails firstWeight = weights.first;
-
-                            return Container(
-                              child: Column(
-                                children: [
-                                  Text(
-                                    "Current Weight",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "${firstWeight.weight}",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 400 / firstWeight.weight.toString().length,
-                                        ),
-                                      ),
-                                      Text(
-                                        "kg",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 30,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Text(
-                                    formatDate(
-                                      firstWeight.dateAdded,
-                                      false,
-                                    ),
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
+                            },
+                          ),
                         ),
                         Spacer(),
                       ],
@@ -146,7 +150,10 @@ class _DashboardPageState extends State<DashboardPage> {
                         icon: Icons.exit_to_app_rounded,
                         subText: "It's not bye bye, come back.",
                         mainText: "Sign Out",
-                        onTap: () {
+                        onTap: () async{
+                          showLoader(context);
+                          await AuthenticationService.signOut();
+                          pop(context);
                           pushToAndClearStack(context, SplashPage());
                         },
                         color: Colors.red.withOpacity(0.2),

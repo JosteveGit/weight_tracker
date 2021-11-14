@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class Logo extends StatelessWidget {
   final double size;
   final bool useHero;
+  final IconData ratherIcon;
   const Logo({
     Key key,
     this.size,
     this.useHero = true,
+    this.ratherIcon,
   }) : super(key: key);
 
   @override
@@ -28,7 +30,7 @@ class Logo extends StatelessWidget {
               child: Container(
                 padding: EdgeInsets.all(30),
                 child: Icon(
-                  Icons.fitness_center_rounded,
+                 ratherIcon ?? Icons.fitness_center_rounded,
                   size: 120,
                   color: Colors.white,
                 ),
