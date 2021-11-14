@@ -21,7 +21,6 @@ class WeightService {
     return _wRef
         .doc(weight.id)
         .update(weight.toJson())
-        .then((value) => print("weight updated"))
         .catchError((error) => print("failed to update weight: $error"));
   }
 
@@ -30,7 +29,6 @@ class WeightService {
     return _wRef
         .doc(id)
         .delete()
-        .then((value) => print("weight deleted"))
         .catchError((error) => print("failed to delete weight: $error"));
   }
   

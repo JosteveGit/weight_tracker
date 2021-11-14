@@ -9,7 +9,3 @@ void setStatusBarColor({BarColor color}) {
 }
 
 enum BarColor { white, black }
-
-void logPrint(String logx, Object message) {
-  print("$logx: $message");
-}

@@ -47,7 +47,6 @@ class _DashboardPageState extends State<DashboardPage> {
                         Logo(
                           size: 50,
                         ),
-                        Spacer(),
                         Expanded(
                           child: StreamBuilder<List<WeightDetails>>(
                             stream: WeightService.streamWeights(),
@@ -74,52 +73,50 @@ class _DashboardPageState extends State<DashboardPage> {
                         
                               WeightDetails firstWeight = weights.first;
                         
-                              return Container(
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "Current Weight",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 20,
-                                      ),
+                              return Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Current Weight",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 20,
                                     ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "${firstWeight.weight}",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 400 / firstWeight.weight.toString().length,
-                                          ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "${firstWeight.weight}",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 400 / firstWeight.weight.toString().length,
                                         ),
-                                        Text(
-                                          "kg",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 30,
-                                          ),
+                                      ),
+                                      Text(
+                                        "kg",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 30,
                                         ),
-                                      ],
-                                    ),
-                                    Text(
-                                      formatDate(
-                                        firstWeight.dateAdded,
-                                        false,
                                       ),
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                      ),
+                                    ],
+                                  ),
+                                  Text(
+                                    formatDate(
+                                      firstWeight.dateAdded,
+                                      false,
                                     ),
-                                  ],
-                                ),
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ],
                               );
                             },
                           ),
                         ),
-                        Spacer(),
                       ],
                     ),
                   ),
